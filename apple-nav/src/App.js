@@ -1,25 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import navData from './data/navData';
+import SubMenu from './components/navComponents/SubMenu'
+
+import NavWrapper from './components/NavWrapper';
 
 function App() {
+  const [currentMenu, setCurrentMenu] = useState([])  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <NavWrapper navData={navData} setCurrentMenu={setCurrentMenu} />
+      </div>
+      <Switch>
+        {/* <Route path="/" exact component={App} /> */}
+        <Route path="/:device/" render={props => <SubMenu {...props} currentMenu={currentMenu} />} />
+      </Switch>
+    </Router>
+    
   );
 }
 
